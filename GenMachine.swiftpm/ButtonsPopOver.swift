@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct NavButtons: View {
+struct ButtonsPopOver: View {
     let icon: String
     let action: () -> Void
     let longPressView: AnyView
+    let iconSize: CGFloat
     @State private var showPopover: Bool = false
     
     
@@ -25,7 +26,7 @@ struct NavButtons: View {
             Image(systemName: icon)
                 .renderingMode(.template)
                 .foregroundColor(Color(red: 28/255, green: 28/255, blue: 20/255))
-                .font(.system(size: 20))
+                .font(.system(size: iconSize))
         }).popover(
             isPresented: self.$showPopover,
             attachmentAnchor: .rect(.bounds),

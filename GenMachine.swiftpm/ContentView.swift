@@ -15,41 +15,40 @@ struct ContentView: View {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .cornerRadius(20)
                 
-                    .padding(EdgeInsets(top: 32, leading: 32, bottom: 32, trailing: 32))
+                    .padding(EdgeInsets(top: 32, leading: 32, bottom: 0, trailing: 32))
                 
-                Button("LongPress to show popover") {
-                    
-                }.popover(
-                    isPresented: self.$showPopover,
-                    content: {
-                        Text("Test")
-                            .padding()
-                    }
-                ).simultaneousGesture(
-                    LongPressGesture(minimumDuration: 0.5)
-                        .onEnded( { _ in
-                            self.showPopover = true
-                            print("clicou long")
-                        })
-                )
-                .highPriorityGesture(TapGesture()
-                    .onEnded { _ in
-                        print("clicou tap")
-                    })
-                
+//                Button("LongPress to show popover") {
+//
+//                }.popover(
+//                    isPresented: self.$showPopover,
+//                    content: {
+//                        Text("Test")
+//                            .padding()
+//                    }
+//                ).simultaneousGesture(
+//                    LongPressGesture(minimumDuration: 0.5)
+//                        .onEnded( { _ in
+//                            self.showPopover = true
+//                            print("clicou long")
+//                        })
+//                )
+//                .highPriorityGesture(TapGesture()
+//                    .onEnded { _ in
+//                        print("clicou tap")
+//                    })
+//
                 
                 .navigationBarItems(
                     trailing:
                         HStack {
-                            NavButtons(icon: "pause", action: {print("clicou pause")}, longPressView: AnyView(Text("pause")))
-                            NavButtons(icon: "arrow.clockwise", action: {print("clicou refresh")}, longPressView: AnyView(Text("refresh")))
-                            NavButtons(icon: "shuffle", action: {print("clicou shuffe")}, longPressView: AnyView(Text("shuffle")))
-                            NavButtons(icon: "info.circle", action: {print("clicou info")}, longPressView: AnyView(Text("info")))
+                            ButtonsPopOver(icon: "pause", action: {print("clicou pause")}, longPressView: AnyView(Text("pause")), iconSize: 20)
+                            ButtonsPopOver(icon: "arrow.clockwise", action: {print("clicou refresh")}, longPressView: AnyView(Text("refresh")), iconSize: 20)
+                            ButtonsPopOver(icon: "shuffle", action: {print("clicou shuffe")}, longPressView: AnyView(Text("shuffle")), iconSize: 20)
+                            ButtonsPopOver(icon: "info.circle", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 20)
                         }
                 )
-                Spacer()
                 ControlPainel()
-                    .padding(EdgeInsets(top: 84, leading: 0, bottom: 0, trailing: 0))
+                    .padding(EdgeInsets(top: 120, leading: 0, bottom: 0, trailing: 0))
             }
         }.navigationViewStyle(StackNavigationViewStyle())
             .sheet(isPresented: self.$showInfoModalView) {
@@ -65,19 +64,12 @@ struct ButtonsViews: View {
         HStack{
             Spacer()
         }
-        HStack(spacing: 13){
-            Image(systemName: "arrow.triangle.swap" )
-                .renderingMode(.template)
-                .foregroundColor( Color(red: 28/255, green: 28/255, blue: 20/255))
-                .font(.system(size: 26))
-            Image(systemName: "paintbrush" )
-                .renderingMode(.template)
-                .foregroundColor( Color(red: 28/255, green: 28/255, blue: 20/255))
-                .font(.system(size: 26))
-            Image(systemName: "line.3.crossed.swirl.circle" )
-                .renderingMode(.template)
-                .foregroundColor( Color(red: 28/255, green: 28/255, blue: 20/255))
-                .font(.system(size: 26))
+        HStack(spacing: 20){
+            ButtonsPopOver(icon: "arrow.triangle.swap", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 30)
+                
+            ButtonsPopOver(icon: "paintbrush", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 30)
+            ButtonsPopOver(icon: "line.3.crossed.swirl.circle", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 30)
+
             
         }
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
