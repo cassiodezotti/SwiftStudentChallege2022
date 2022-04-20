@@ -1,11 +1,14 @@
 import SwiftUI
 
+
+
+
 struct ContentView: View {
     @State private var text = ""
     @State private var showPopover: Bool = false
     @State var showInfoModalView: Bool = true
     
-    
+    @State private var number = 50.0
     
     var body: some View {
         
@@ -14,39 +17,35 @@ struct ContentView: View {
             VStack {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .cornerRadius(20)
-                
                     .padding(EdgeInsets(top: 32, leading: 32, bottom: 0, trailing: 32))
                 
-//                Button("LongPress to show popover") {
-//
-//                }.popover(
-//                    isPresented: self.$showPopover,
-//                    content: {
-//                        Text("Test")
-//                            .padding()
-//                    }
-//                ).simultaneousGesture(
-//                    LongPressGesture(minimumDuration: 0.5)
-//                        .onEnded( { _ in
-//                            self.showPopover = true
-//                            print("clicou long")
-//                        })
-//                )
-//                .highPriorityGesture(TapGesture()
-//                    .onEnded { _ in
-//                        print("clicou tap")
-//                    })
-//
+                    .navigationBarItems(
+                        trailing:
+                            HStack {
+                                ButtonsPopOver(icon: "info.circle", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 20)
+                            }
+                    )
+                    .navigationBarItems(
+                        trailing:
+                            HStack {
+                                ButtonsPopOver(icon: "shuffle", action: {print("clicou shuffe")}, longPressView: AnyView(Text("shuffle")), iconSize: 20)
+                            }
+                    )
+                    .navigationBarItems(
+                        trailing:
+                            HStack {
+                                ButtonsPopOver(icon: "arrow.clockwise", action: {print("clicou refresh")}, longPressView: AnyView(Text("refresh")), iconSize: 20)
+                            }
+                    )
+                    .navigationBarItems(
+                        trailing:
+                            HStack {
+                                ButtonsPopOver(icon: "pause", action: {print("clicou pause")}, longPressView: AnyView(Text("pause")), iconSize: 20)
+                            }
+                    )
                 
-                .navigationBarItems(
-                    trailing:
-                        HStack {
-                            ButtonsPopOver(icon: "pause", action: {print("clicou pause")}, longPressView: AnyView(Text("pause")), iconSize: 20)
-                            ButtonsPopOver(icon: "arrow.clockwise", action: {print("clicou refresh")}, longPressView: AnyView(Text("refresh")), iconSize: 20)
-                            ButtonsPopOver(icon: "shuffle", action: {print("clicou shuffe")}, longPressView: AnyView(Text("shuffle")), iconSize: 20)
-                            ButtonsPopOver(icon: "info.circle", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 20)
-                        }
-                )
+                
+                
                 ControlPainel()
                     .padding(EdgeInsets(top: 120, leading: 0, bottom: 0, trailing: 0))
             }
@@ -66,10 +65,9 @@ struct ButtonsViews: View {
         }
         HStack(spacing: 20){
             ButtonsPopOver(icon: "arrow.triangle.swap", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 30)
-                
+            
             ButtonsPopOver(icon: "paintbrush", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 30)
             ButtonsPopOver(icon: "line.3.crossed.swirl.circle", action: {print("clicou info")}, longPressView: AnyView(Text("info")), iconSize: 30)
-
             
         }
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
@@ -79,13 +77,11 @@ struct ButtonsViews: View {
 
 
 
-
 struct ControlPainel: View {
     
+    @State var sliderPosition: ClosedRange<Float> = 30...80
     @State private var number = 50.0
-    @State private var size = 50.0
     @State private var isEditingNumber = false
-    
     @State private var isEditingSize = false
     
     var body: some View {
@@ -124,14 +120,8 @@ struct ControlPainel: View {
                     }
                     HStack{
                         Image(systemName: "star")
-                        Slider(
-                            value: $size,
-                            in: 0...100,
-                            onEditingChanged: { editing in
-                                isEditingSize = editing
-                            }
-                        )
-                        .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                        RangedSliderView(value: $sliderPosition, bounds: 0...100)
+                            .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
                         Image(systemName: "star")
                     }
                 }
